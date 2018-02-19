@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors')
 
 const PORT = 3030;
@@ -17,6 +18,7 @@ var knex = require('knex')({
 
 const app = express();
 
+app.use(bodyParser.json());
 app.use(cors());
 
 app.use(express.static('build'))
@@ -30,6 +32,19 @@ app.get('/employees', (req, res) => {
     .from('employees')
     .then((data) => {
       res.send(data);
+    });
+});
+
+app.post('/employees', (req, res) => {
+  const employee = {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    salary: req.body.salary
+  }
+  knex.insert(employee)
+    .into('employees')
+    .then(() => {
+      res.send({ message: 'employee created!' });
     });
 });
 
