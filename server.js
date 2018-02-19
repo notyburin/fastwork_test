@@ -2,17 +2,17 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors')
+const cors = require('cors');
 
-const PORT = 3030;
+const PORT = 3000;
 
-var knex = require('knex')({
+const knex = require('knex')({
   client: 'mysql',
   connection: {
-    host : 'mysql',
-    user : 'root',
-    password : 'example',
-    database : 'myapp_test'
+    host: 'mysql',
+    user: 'root',
+    password: 'example',
+    database: 'myapp_test'
   }
 });
 
@@ -21,7 +21,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(express.static('build'))
+app.use(express.static('build'));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/build/index.html');
@@ -40,7 +40,7 @@ app.post('/employees', (req, res) => {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     salary: req.body.salary
-  }
+  };
   knex.insert(employee)
     .into('employees')
     .then(() => {

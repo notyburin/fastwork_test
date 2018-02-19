@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3030';
+// axios.defaults.baseURL = 'http://localhost:3030';
 
 export const FETCH_EMPLOYEE_START = 'FETCH_EMPLOYEE_START';
 export const FETCH_EMPLOYEE_SUCCESS = 'FETCH_EMPLOYEE_SUCCESS';
