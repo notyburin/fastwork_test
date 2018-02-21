@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Doughnut } from 'react-chartjs-2';
 
 const color = [
@@ -20,31 +21,39 @@ const color = [
   '#FF8C00',
 ];
 
-const Chart = (props) => {
-  const { employeeList } = props;
+export const setupData = (employeeList) => {
   const salaryList = [];
   const nameList = [];
   employeeList.forEach((list) => {
     salaryList.push(list.salary);
     nameList.push(`${list.firstname} ${list.lastname}`);
   });
-  const chartData = {
+
+  return {
     datasets: [{
       data: salaryList,
       backgroundColor: color,
     }],
     labels: nameList,
   };
+};
 
-  const chartOptions = {
-    legend: {
-      position: 'right',
-    },
-  };
+export const Chart = (props) => {
+  const { employeeList } = props;
+  const chartData = setupData(employeeList);
+  const chartOptions = { legend: { position: 'right' } };
 
   return (
     <Doughnut data={chartData} options={chartOptions} />
   );
+};
+
+Chart.propTypes = {
+  employeeList: PropTypes.array,
+};
+
+Chart.defaultProps = {
+  employeeList: [],
 };
 
 const mapStateToProps = (state) => {

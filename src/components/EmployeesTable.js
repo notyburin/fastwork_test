@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { fetchEmployee } from '../actions';
 
-class EmployeesTable extends Component {
+export class EmployeesTable extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(fetchEmployee());
@@ -39,6 +40,17 @@ class EmployeesTable extends Component {
     );
   }
 }
+
+EmployeesTable.propTypes = {
+  isFetching: PropTypes.bool,
+  employeeList: PropTypes.array,
+  dispatch: PropTypes.func.isRequired,
+};
+
+EmployeesTable.defaultProps = {
+  isFetching: false,
+  employeeList: [],
+};
 
 const mapStateToProps = (state) => {
   const { isFetching, employeeList } = state;

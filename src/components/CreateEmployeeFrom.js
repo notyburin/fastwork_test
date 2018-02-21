@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { createEmployee, resetFormSuccess, fetchEmployee } from '../actions';
@@ -34,7 +35,7 @@ const Button = styled.button`
 const required = value => !value.toString().trim().length;
 const isNumeric = number => !isNaN(parseFloat(number)) && isFinite(number);
 
-class CreateEmployeeFrom extends Component {
+export class CreateEmployeeFrom extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,7 +48,6 @@ class CreateEmployeeFrom extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.resetForm);
     if (nextProps.resetForm) {
       this.setState({
         firstname: '',
@@ -86,7 +86,7 @@ class CreateEmployeeFrom extends Component {
       <div className="container">
         {
           isProcess &&
-          <Process>
+          <Process className="process">
             <TextProcess>Process...</TextProcess>
           </Process>
         }
@@ -117,13 +117,23 @@ class CreateEmployeeFrom extends Component {
             />
           </div>
           <div className="col">
-            <Button className="btn btn-primary" onClick={this.handleSubmit}>Create</Button>
+            <Button id="createEmployeeBtn" className="btn btn-primary" onClick={this.handleSubmit}>Create</Button>
           </div>
         </div>
       </div>
     );
   }
 }
+
+CreateEmployeeFrom.propTypes = {
+  isProcess: PropTypes.bool,
+  resetForm: PropTypes.bool,
+};
+
+CreateEmployeeFrom.defaultProps = {
+  isProcess: false,
+  resetForm: false,
+};
 
 const mapStateToProps = (state) => {
   const { isProcess, resetForm } = state;
